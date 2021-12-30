@@ -1,33 +1,22 @@
 import {
+  AUTHENTICATION_REFRESH,
   LOGIN_REQUEST_FAIL,
   LOGIN_REQUEST_LOADING,
   LOGIN_REQUEST_SUCCESS,
 } from "./actionTypes";
 
-const initialAuthState = {
-  isLoading: false,
-  username: "",
-  isLoggedIn: false,
-  access_token: "",
-  refresh_token: "",
-  status: 0,
-  error: "",
-};
+const initialAuthState = {};
 
 const authReducer = (state = initialAuthState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST_SUCCESS:
-      let authSuccess = action.payload;
-      return { authSuccess };
-
+      return { success: action.payload };
     case LOGIN_REQUEST_FAIL:
-      let authUnsuccess = action.payload;
-      return { authUnsuccess };
-
+      return { unsuccess: action.payload };
     case LOGIN_REQUEST_LOADING:
-      let authLoading = action.payload;
-      return { authLoading };
-
+      return { loading: action.payload };
+    case AUTHENTICATION_REFRESH:
+      return { refresh: action.payload };
     default:
       return state;
   }

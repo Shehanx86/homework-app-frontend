@@ -1,37 +1,21 @@
-import axios from "axios"
 import jwt_decode from "jwt-decode";
-
-export const login = (credentials) => {
-    const params = new URLSearchParams();
-    params.append('username', credentials.username);
-    params.append('password', credentials.password);
-    
-    return axios.post('http://localhost:8080/api/login', params);
-}
 
 export const handleLoginSuccessResponse = (response) => {
     let { access_token, refresh_token } = response.headers;
 
-    localStorage.setItem('access_token', JSON.stringify(access_token));
-    localStorage.setItem('refresh_token', JSON.stringify(refresh_token));
+    localStorage.setItem('access_token', access_token);
+    localStorage.setItem('refresh_token', refresh_token);
 
     return {
-        isLoading: false,
-        isLoggedIn: true,
         username: jwt_decode(access_token).sub,
-        access_token: access_token,
-        refresh_token: refresh_token,
+        role: jwt_decode(access_token).roles[0],
         status: response.status
     }
 }
 
 export const handleLoginUnsuccessResponse = (error) => {
+    logout();
     return {
-        isLoading: false,
-        isLoggedIn: false,
-        username: "",
-        access_token: "",
-        refresh_token: "",
         status: error.response.status
     }
 }
@@ -39,15 +23,38 @@ export const handleLoginUnsuccessResponse = (error) => {
 export const handleLoadingRequest = () => {
     return {
         isLoading: true,
-        isLoggedIn: false,
-        username: "",
-        access_token: "",
-        refresh_token: "",
-        status: 0
+    }
+}
+
+export const handleAuthenticationRefresh = () => {
+    let access_token = localStorage.getItem('access_token')
+    if (!access_token) {
+        window.location.href = '/login';
+    } else {
+        return {
+            username: jwt_decode(access_token).sub,
+            role: jwt_decode(access_token).roles[0],
+        }
     }
 }
 
 export const logout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+}
+
+export const retreiveAccessTokenFromLocalStorage = () => {
+    const token = localStorage.getItem('access_token')
+    if(!token) {
+        console.log("not logged in")
+    }
+    return token;
+}
+
+export const retreiveRefreshTokenFromLocalStorage = () => {
+    const token = localStorage.getItem('refresh_token')
+    if(!token) {
+        
+    }
+    return token;
 }

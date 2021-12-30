@@ -1,5 +1,6 @@
-import { LOGIN_REQUEST_SUCCESS, LOGIN_REQUEST_FAIL, LOGIN_REQUEST_LOADING} from "./actionTypes";
-import { login, logout, handleLoginSuccessResponse, handleLoginUnsuccessResponse, handleLoadingRequest } from "../../service/authService";
+import { LOGIN_REQUEST_SUCCESS, LOGIN_REQUEST_FAIL, LOGIN_REQUEST_LOADING, AUTHENTICATION_REFRESH} from "./actionTypes";
+import { handleLoginSuccessResponse, handleLoginUnsuccessResponse, handleLoadingRequest, handleAuthenticationRefresh } from "../../service/authService";
+import { login } from "../../api/authAPI";
 
 export const loginAction = (credentials) => {
     return async (dispatch) => {
@@ -9,12 +10,13 @@ export const loginAction = (credentials) => {
         })
         try {
             let response = await login(credentials);
+            console.log("login suc")
             dispatch({
                 type: LOGIN_REQUEST_SUCCESS,
                 payload: handleLoginSuccessResponse(response)
             })
         } catch(error) {
-            logout();
+            console.log("login fai")
             dispatch({
                 type: LOGIN_REQUEST_FAIL,
                 payload: handleLoginUnsuccessResponse(error)
@@ -23,3 +25,11 @@ export const loginAction = (credentials) => {
     }
 }
 
+export const authenticationRefreshAction = () => {
+    return (dispatch) => {
+        dispatch({
+            type: AUTHENTICATION_REFRESH,
+            payload: handleAuthenticationRefresh()
+        })
+    }
+}

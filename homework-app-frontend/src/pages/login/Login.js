@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Header from "../../components/header/Header";
 import { useSelector, useDispatch } from 'react-redux'
 import { loginAction } from "../../redux/auth/actions";
+
 
 function Login() {
 
@@ -9,7 +9,6 @@ function Login() {
     const dispatch = useDispatch();
 
     const [credentials, setcredentials] = useState({});
-    const [tokens, setTokens] = useState({});
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -27,16 +26,18 @@ function Login() {
     }
 
     const checkLogin = () => {
-      auth.authSuccess && console.log(auth)
+      console.log(auth)
     }
 
     const handleSubmit = () => {
-      dispatch(loginAction(credentials));
+      const params = new URLSearchParams();
+      params.append('username', credentials.username);
+      params.append('password', credentials.password);
+      dispatch(loginAction(params));
     }
 
   return (
     <>
-      <Header />
       <div className="">
         <form>
           <div className="form-group">
