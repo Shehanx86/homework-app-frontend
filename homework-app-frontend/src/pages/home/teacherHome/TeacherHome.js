@@ -21,8 +21,8 @@ function Home() {
           <div className="col-lg-8">
             <h1 className="mx-2 my-2">Homeworks created by you</h1>
             <br />
-            {homeworks.success &&
-              homeworks.success.map((homework) => (
+            {homeworks.data &&
+              homeworks.data.map((homework) => (
                 <HomeworkCard
                   deleteHomework={() => {
                     console.log("delete hw");
