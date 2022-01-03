@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import HomeworkCard from "../../../components/homeworkCard/HomeworkCard";
-import CreateHomework from "./CreateHomework";
+import CreateHomeworkForm from "./CreateHomeworkForm";
 import TeacherHeader from "../../../components/header/TeacherHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { getHomeworksByCreatedTeacherAction } from "../../../redux/homework/homeworkActions";
+import TeacherHomeworkCard from "../../../components/homeworkCard/TeacherHomeworkCard";
 
 function Home() {
   const homeworks = useSelector((state) => state.homeworks);
@@ -23,7 +23,7 @@ function Home() {
             <br />
             {homeworks.data &&
               homeworks.data.map((homework) => (
-                <HomeworkCard
+                <TeacherHomeworkCard
                   key={homework.id}
                   id={homework.id}
                   status={homework.status}
@@ -37,7 +37,7 @@ function Home() {
           </div>
 
           <div className="col-lg-4">
-            <CreateHomework />
+            <CreateHomeworkForm />
           </div>
         </div>
       </div>

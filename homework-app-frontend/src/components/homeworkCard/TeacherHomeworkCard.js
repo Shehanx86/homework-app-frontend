@@ -5,15 +5,16 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { AiFillDelete, AiFillEdit, AiOutlineFileDone } from "react-icons/ai";
 import { OptionsTwoButtons } from "../alert/confirmOptions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { deleteHomeworkByIdAction } from "../../redux/homework/homeworkActions";
 import Popover from "@mui/material/Popover";
-// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import UpdateHomeworkForm from "../../pages/home/teacherHome/UpdateHomeworkForm";
+import moment from "moment";
+import { Row } from "react-bootstrap";
 
-function HomeworkCard(props) {
+function TeacherHomeworkCard(props) {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -32,9 +33,9 @@ function HomeworkCard(props) {
 
   const changeColor = (status) => {
     let color = "yellow";
-    if (status === "finished") {
+    if (status === "Finished") {
       color = "red";
-    } else if (status === "not finished") {
+    } else if (status === "Not Finished") {
       color = "yellow";
     }
     return color;
@@ -98,31 +99,45 @@ function HomeworkCard(props) {
                     horizontal: "left",
                   }}
                 >
-                  <Typography sx={{ p: 2 }}  component={'div'}>
-                    <UpdateHomeworkForm 
+                  <Typography sx={{ p: 2 }} component={"div"}>
+                    <UpdateHomeworkForm
+                      id={props.id}
                       title={props.title}
                       objectives={props.objectives}
-                      deadline={props.deadline}
+                      deadline={moment(props.deadline).format(
+                        "YYYY-MM-DDTkk:mm"
+                      )}
                       assignedTo={props.assignedTo}
                     />
-
-{/* <form>
-                  <label>lll</label>
-                  <input type="text"/>
-                  </form> */}
                   </Typography>
                 </Popover>
 
-                <button className="btn btn-danger mx-1" onClick={() => deleteHomeworkConfirm(props.id, props.title)}>
-                  <AiFillDelete/>
-                  </button>
+                <button
+                  className="btn btn-danger mx-1"
+                  onClick={() => deleteHomeworkConfirm(props.id, props.title)}
+                >
+                  <AiFillDelete />
+                </button>
               </div>
             </div>
           </div>
 
           <Collapse isOpened={open}>
-            <div>
-              {props.objectives} - {props.assignedTo} - {props.createdAt}
+            <div className="row">
+              <div className="col-2">
+                <p>Objetives</p>
+                <p>Assigned to</p>
+                <p>Deadline</p>
+                <p>status</p>
+                <p><i>Created At</i></p>
+              </div>
+              <div className="col-10">
+                <p>- {props.objectives} </p>
+                <p>- {props.assignedTo}</p>
+                <p>- {moment(props.deadline).format("dddd, MMMM Do YYYY, h:mm:ss a")}</p>
+                <p>- {props.status}</p>
+                <p><i>- {moment(props.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}</i></p>
+              </div>
             </div>
           </Collapse>
         </div>
@@ -131,4 +146,4 @@ function HomeworkCard(props) {
   );
 }
 
-export default HomeworkCard;
+export default TeacherHomeworkCard;

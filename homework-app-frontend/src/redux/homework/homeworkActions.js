@@ -1,6 +1,6 @@
-import { createNewHomework, deleteHomeworkById, getHomeworksByCreatedTeacher } from "../../api/homeworkAPI";
-import { handleCreateNewHomeworkLoadingRequest, handleCreateNewHomeworkSuccessResponse, handleCreateNewHomeworkUnsuccessResponse, handleGetHomeworksByCreatedTeacherLoadingRequest, handleGetHomeworksByCreatedTeacherSuccessResponse, handleGetHomeworksByCreatedTeacherUnsuccessResponse, handleHomeworkDeleteLoadingRequest, handleHomeworkDeleteSuccessResponse, handleHomeworkDeleteUnsuccessResponse } from "../../service/homeworkService";
-import { CREATE_NEW_HOMEWORK_LOADING, CREATE_NEW_HOMEWORK_SUCCESS, CREATE_NEW_HOMEWORK_UNSUCCESS, DELETE_HOMEWORK_LOADING, DELETE_HOMEWORK_SUCCESS, DELETE_HOMEWORK_UNSUCCESS, GET_HOMEWORK_BY_CREATED_TEACHER_LOADING, GET_HOMEWORK_BY_CREATED_TEACHER_SUCCESS, GET_HOMEWORK_BY_CREATED_TEACHER_UNSUCCESS } from "./homeworkActionTypes";
+import { createNewHomework, deleteHomeworkById, getHomeworksByCreatedTeacher, updateHomeworkById } from "../../api/homeworkAPI";
+import { handleCreateNewHomeworkLoadingRequest, handleCreateNewHomeworkSuccessResponse, handleCreateNewHomeworkUnsuccessResponse, handleGetHomeworksByCreatedTeacherLoadingRequest, handleGetHomeworksByCreatedTeacherSuccessResponse, handleGetHomeworksByCreatedTeacherUnsuccessResponse, handleHomeworkDeleteLoadingRequest, handleHomeworkDeleteSuccessResponse, handleHomeworkDeleteUnsuccessResponse, handleHomeworkUpdateLoading, handleHomeworkUpdateSuccess, handleHomeworkUpdateUnsuccess } from "../../service/homeworkService";
+import { CREATE_NEW_HOMEWORK_LOADING, CREATE_NEW_HOMEWORK_SUCCESS, CREATE_NEW_HOMEWORK_UNSUCCESS, DELETE_HOMEWORK_LOADING, DELETE_HOMEWORK_SUCCESS, DELETE_HOMEWORK_UNSUCCESS, GET_HOMEWORK_BY_CREATED_TEACHER_LOADING, GET_HOMEWORK_BY_CREATED_TEACHER_SUCCESS, GET_HOMEWORK_BY_CREATED_TEACHER_UNSUCCESS, UPDATE_HOMEWORK_LOADING, UPDATE_HOMEWORK_SUCCESS, UPDATE_HOMEWORK_UNSUCCESS } from "./homeworkActionTypes";
 import { toast } from "react-toastify";
 import { homeworkPromiseToast } from "../../components/toasts/promiseToasts";
 
@@ -53,7 +53,7 @@ export const deleteHomeworkByIdAction = (homeworkId) => {
             payload: handleHomeworkDeleteLoadingRequest()
         })
         try {
-            let response = await toast. promise(deleteHomeworkById(homeworkId), homeworkPromiseToast('deleted'));
+            let response = await toast.promise(deleteHomeworkById(homeworkId), homeworkPromiseToast('deleted'));
             dispatch({
                 type: DELETE_HOMEWORK_SUCCESS,
                 payload: handleHomeworkDeleteSuccessResponse(response)
@@ -65,5 +65,26 @@ export const deleteHomeworkByIdAction = (homeworkId) => {
             })
         }
 
+    }
+}
+
+export const updateHomeworkAction = (homeworkId, homeworkData) => {
+    return async (dispatch) => {
+        dispatch({
+            type: UPDATE_HOMEWORK_LOADING,
+            payload: handleHomeworkUpdateLoading()
+        })
+        try {
+            let response = await toast.promise(updateHomeworkById(homeworkId, homeworkData), homeworkPromiseToast('updated'));
+            dispatch({
+                type: UPDATE_HOMEWORK_SUCCESS,
+                payload: handleHomeworkUpdateSuccess(response)
+            })
+        } catch(error) {
+            dispatch({
+                type: UPDATE_HOMEWORK_UNSUCCESS,
+                payload: handleHomeworkUpdateUnsuccess(error)
+            })
+        }
     }
 }

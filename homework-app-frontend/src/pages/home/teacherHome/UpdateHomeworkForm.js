@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateHomeworkAction } from '../../../redux/homework/homeworkActions';
 
 function UpdateHomeworkForm(props) {
   useEffect(() => {
-
+    console.log(props.id)
   },[])
+
+  const dispatch = useDispatch();
 
   const [homeworkData, setHomeworkData] = useState({
     title: props.title,
@@ -13,7 +17,15 @@ function UpdateHomeworkForm(props) {
   })
 
   const handleSubmit = () => {
-    console.log(homeworkData)
+    console.log(props.id)
+    let updateHomeworkData = {
+      pId: props.id,
+      pDeadline: homeworkData.deadline,
+      pAssignedTo: homeworkData.assignedTo,
+      pObjectives: homeworkData.objectives,
+      pTitle: homeworkData.title
+    }
+    dispatch(updateHomeworkAction(props.id, updateHomeworkData));
   }
 
   const handleInput = (e) => {
@@ -56,7 +68,7 @@ function UpdateHomeworkForm(props) {
               <div className="col-sm-10">
                 <input
                   value={homeworkData.deadline}
-                  type="date"
+                  type="datetime-local"
                   name="deadline"
                   className="form-control"
                   placeholder="Deadline"
@@ -80,7 +92,7 @@ function UpdateHomeworkForm(props) {
             <div className="form-group row">
               <div className="col-sm-10">
                 <button
-                  type="submit"
+                  type="button"
                   className="btn btn-primary"
                   onClick={handleSubmit}
                 >

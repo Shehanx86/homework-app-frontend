@@ -14,16 +14,18 @@ export const handleGetHomeworksByCreatedTeacherUnsuccessResponse = (error) => {
 }
 
 export const handleCreateNewHomeworkLoadingRequest = () => {
-    return {isLoading: true};
+    return true;
 }
 
 export const handleCreateNewHomeworkSuccessResponse = (response) => {
-    console.log(response.body)
-    return response.body
+    return response.data
 }
 
 export const handleCreateNewHomeworkUnsuccessResponse = (error) => {
-    return error.response.status
+    return {
+        message: error,
+        status: error.response.status
+    };
 }
 
 export const handleHomeworkDeleteLoadingRequest = () => {
@@ -31,12 +33,27 @@ export const handleHomeworkDeleteLoadingRequest = () => {
 }
 
 export const handleHomeworkDeleteSuccessResponse = (response) => {
-    console.log(response)
-    return response.body
+    return response.data
 }
 
 export const handleHomeworkDeleteUnsuccessResponse = (error) => {
-    console.log(error)
-   // return error.response.status
-    
+    return {
+        message: error,
+        status: error.response.status
+    };
+}
+
+export const handleHomeworkUpdateLoading = () => {
+    return true;
+}
+
+export const handleHomeworkUpdateSuccess = (response) => {
+    return response.data;
+}
+
+export const handleHomeworkUpdateUnsuccess = (error) => {
+    return {
+        message: error,
+        status: error.response.status
+    };
 }
