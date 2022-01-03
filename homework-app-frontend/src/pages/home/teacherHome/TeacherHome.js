@@ -30,6 +30,7 @@ function Home() {
                   title={homework.title}
                   objectives={homework.objectives}
                   assignedTo={homework.assignedTo}
+                  deadline={homework.deadline}
                   createdAt={homework.createdAt}
                 />
               ))}

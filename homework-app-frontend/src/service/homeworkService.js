@@ -36,5 +36,7 @@ export const handleHomeworkDeleteSuccessResponse = (response) => {
 }
 
 export const handleHomeworkDeleteUnsuccessResponse = (error) => {
-    return error.response.status
+    console.log(error)
+   // return error.response.status
+    
 }
