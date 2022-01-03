@@ -1,11 +1,11 @@
-export const OptionsTwoButtons = (title, msg, yesButtonLabel, yesButtonFunction, noButtonLabel, noButtonFunction) => {
+export const OptionsTwoButtons = (id, title, msg, yesButtonLabel, yesButtonFunction, noButtonLabel, noButtonFunction) => {
     return {
         title: title,
         message: msg,
         buttons: [
             {
                 label: yesButtonLabel,
-                onClick: () => yesButtonFunction()
+                onClick: () => yesButtonFunction(id)
             },
             {
                 label: noButtonLabel,

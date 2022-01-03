@@ -24,10 +24,8 @@ function Home() {
             {homeworks.data &&
               homeworks.data.map((homework) => (
                 <HomeworkCard
-                  deleteHomework={() => {
-                    console.log("delete hw");
-                  }}
                   key={homework.id}
+                  id={homework.id}
                   status={homework.status}
                   title={homework.title}
                   objectives={homework.objectives}

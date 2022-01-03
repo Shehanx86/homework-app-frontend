@@ -7,3 +7,11 @@ export const getHomeworksByCreatedTeacher = () => {
 export const createNewHomework = (homeworkData) => {
     return axiosConfig.post('/homework/',homeworkData);
 }
+
+export const deleteHomeworkById = (homeworkId) => {
+    return axiosConfig.delete('/homework/'+homeworkId);
+}
+
+export const updateHomeworkById = (homeworkId, homeworkData) => {
+    return axiosConfig.put('/homework/'+homeworkId, homeworkData);
+}

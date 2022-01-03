@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { Collapse } from "react-collapse";
 import { confirmAlert } from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css'; 
 import { AiFillDelete, AiFillEdit, AiOutlineFileDone } from 'react-icons/ai';
 import { OptionsTwoButtons } from "../alert/confirmOptions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteHomeworkByIdAction } from "../../redux/homework/homeworkActions";
+
 
 function HomeworkCard(props) {
-    // const [title, status, objectives, createdAt, assignedTo, homeworkDelete ] = props;
+
     const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
 
     const changeColor = (status) => {
         let color = "yellow";
@@ -20,16 +26,16 @@ function HomeworkCard(props) {
         return color;
     }
 
-    const yesButton = () => {
-      console.log("yes")
+    const yesButton = (homeworkId) => {
+      dispatch(deleteHomeworkByIdAction(homeworkId));
     }
 
     const noButton = () => {
-      console.log("no")
+      toast("Delete cancelled!");
     }
 
-    const taskDelete = () => {
-      confirmAlert(OptionsTwoButtons("Delete Homework?", "Are you sure want to delete it?", "Yes", yesButton, "No", noButton ))
+    const deleteHomeworkConfirm = (homeworkId, title) => {
+      confirmAlert(OptionsTwoButtons(homeworkId, "Delete "+title+"?", "Are you sure want to delete this?", "Yes", yesButton, "No", noButton ))
     }
 
     return (
@@ -50,7 +56,7 @@ function HomeworkCard(props) {
                   <a href="#" className="btn btn-success mx-1">
                     <AiFillEdit  />
                   </a>
-                  <button className="btn btn-danger mx-1" onClick={props.homeworkDelete}>
+                  <button className="btn btn-danger mx-1" onClick={() => deleteHomeworkConfirm(props.id, props.title)}>
                     <AiFillDelete />
                   </button>
                   </div>

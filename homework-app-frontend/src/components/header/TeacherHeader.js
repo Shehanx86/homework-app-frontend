@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { authenticationRefreshAction } from "../../redux/auth/actions";
+import { authenticationRefreshAction } from "../../redux/auth/authActions";
 
 function Header() {
 
-  const refresh = useSelector((state) => state.auth.refresh);
+  const data = useSelector((state) => state.auth.data);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(authenticationRefreshAction());
-    console.log(refresh)
   }, []);
 
   return (
@@ -24,7 +23,7 @@ function Header() {
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/stats">Homework stats</Nav.Link>
           </Nav>
-          <Navbar.Text className="mx-2">{refresh && refresh.username }</Navbar.Text>
+          <Navbar.Text className="mx-2">{data && data.username }</Navbar.Text>
   
       <button className="btn btn-outline-success mx-2" type="button">Log out</button>
     </Navbar>

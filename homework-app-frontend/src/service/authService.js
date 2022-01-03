@@ -2,7 +2,6 @@ import jwt_decode from "jwt-decode";
 
 export const handleLoginSuccessResponse = (response) => {
     let { access_token, refresh_token } = response.headers;
-
     localStorage.setItem('access_token', access_token);
     localStorage.setItem('refresh_token', refresh_token);
 
@@ -16,14 +15,13 @@ export const handleLoginSuccessResponse = (response) => {
 export const handleLoginUnsuccessResponse = (error) => {
     logout();
     return {
+        message: error.message,
         status: error.response.status
     }
 }
 
 export const handleLoadingRequest = () => {
-    return {
-        isLoading: true,
-    }
+    return true;
 }
 
 export const handleAuthenticationRefresh = () => {

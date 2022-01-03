@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { loginAction } from "../../redux/auth/actions";
+import { loginAction } from "../../redux/auth/authActions";
 
 
 function Login() {
