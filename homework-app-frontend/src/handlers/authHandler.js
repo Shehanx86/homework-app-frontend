@@ -40,19 +40,3 @@ export const logout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
 }
-
-export const retreiveAccessTokenFromLocalStorage = () => {
-    const token = localStorage.getItem('access_token')
-    if(!token) {
-        console.log("not logged in")
-    }
-    return token;
-}
-
-export const retreiveRefreshTokenFromLocalStorage = () => {
-    const token = localStorage.getItem('refresh_token')
-    if(!token) {
-        
-    }
-    return token;
-}

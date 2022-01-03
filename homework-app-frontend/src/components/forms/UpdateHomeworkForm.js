@@ -1,45 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { createNewHomeworkAction } from "../../../redux/homework/homeworkActions";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { updateHomeworkAction } from "../../redux/homework/homeworkActions";
 
-function CreateHomework() {
+function UpdateHomeworkForm(props) {
+  useEffect(() => {
+    console.log(props.id);
+  }, []);
 
-  const [inputs, setInputs] = useState({});
   const dispatch = useDispatch();
+
+  const [homeworkData, setHomeworkData] = useState({
+    title: props.title,
+    objectives: props.objectives,
+    deadline: props.deadline,
+    assignedTo: props.assignedTo,
+  });
+
+  const handleSubmit = () => {
+    console.log(props.id);
+    let updateHomeworkData = {
+      pId: props.id,
+      pDeadline: homeworkData.deadline,
+      pAssignedTo: homeworkData.assignedTo,
+      pObjectives: homeworkData.objectives,
+      pTitle: homeworkData.title,
+    };
+    dispatch(updateHomeworkAction(props.id, updateHomeworkData));
+  };
 
   const handleInput = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setInputs((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const homeworkData = {
-      pTitle: inputs.title,
-      pAssignedTo: inputs.assignedTo,
-      pDeadline: inputs.deadline,
-      pObjectives: inputs.objectives,
-    }
-    dispatch(createNewHomeworkAction(homeworkData))
+    setHomeworkData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <>
-    <br/>
-    <div className="card">
-      <div className="card-body shadow">
-      <h5 className="card-title">Create new Homework</h5>
-      <ToastContainer autoClose={2000} />
-      <div>
+    <div>
       <form>
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label mt-1">Title</label>
-          <div className="col-sm-9">
+          <label className="col-sm-2 col-form-label">Title</label>
+          <div className="col-sm-10">
             <input
+              value={homeworkData.title}
               type="text"
               name="title"
               className="form-control"
@@ -49,9 +51,10 @@ function CreateHomework() {
           </div>
         </div>
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label mt-1">Objectives</label>
-          <div className="col-sm-9">
+          <label className="col-sm-2 col-form-label">Objectives</label>
+          <div className="col-sm-10">
             <input
+              value={homeworkData.objectives}
               type="text"
               name="objectives"
               className="form-control"
@@ -61,9 +64,10 @@ function CreateHomework() {
           </div>
         </div>
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label mt-1">Deadline</label>
-          <div className="col-sm-9">
+          <label className="col-sm-2 col-form-label">Deadline</label>
+          <div className="col-sm-10">
             <input
+              value={homeworkData.deadline}
               type="datetime-local"
               name="deadline"
               className="form-control"
@@ -73,9 +77,10 @@ function CreateHomework() {
           </div>
         </div>
         <div className="form-group row">
-          <label className="col-sm-3 col-form-label mt-1">Assign To</label>
-          <div className="col-sm-9">
+          <label className="col-sm-2 col-form-label">Assign To</label>
+          <div className="col-sm-10">
             <input
+              value={homeworkData.assignedTo}
               type="text"
               name="assignedTo"
               className="form-control"
@@ -87,20 +92,17 @@ function CreateHomework() {
         <div className="form-group row">
           <div className="col-sm-10">
             <button
-              type="submit"
+              type="button"
               className="btn btn-primary"
               onClick={handleSubmit}
             >
-              Create
+              Submit
             </button>
           </div>
         </div>
       </form>
     </div>
-      </div>
-      </div>      
-    </>
   );
 }
 
-export default CreateHomework;
+export default UpdateHomeworkForm;

@@ -19,7 +19,8 @@ const authReducer = (state = initialAuthState, action) => {
     case LOGIN_REQUEST_SUCCESS:
       return { 
         ...state,
-        isLoading: action.payload };
+        isLoading: false,
+        data: action.payload };
     case LOGIN_REQUEST_FAIL:
       return { 
         ...state,
@@ -31,6 +32,7 @@ const authReducer = (state = initialAuthState, action) => {
     case AUTHENTICATION_REFRESH:
       return { 
         ...state,
+        isLoading: false,
         data: action.payload };
     default:
       return state;

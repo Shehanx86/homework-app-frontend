@@ -10,9 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { deleteHomeworkByIdAction } from "../../redux/homework/homeworkActions";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
-import UpdateHomeworkForm from "../../pages/home/teacherHome/UpdateHomeworkForm";
 import moment from "moment";
-import { Row } from "react-bootstrap";
+import UpdateHomeworkForm from "../forms/UpdateHomeworkForm";
 
 function TeacherHomeworkCard(props) {
   const [open, setOpen] = useState(false);

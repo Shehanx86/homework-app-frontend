@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import CreateHomeworkForm from "./CreateHomeworkForm";
 import TeacherHeader from "../../../components/header/TeacherHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { getHomeworksByCreatedTeacherAction } from "../../../redux/homework/homeworkActions";
 import TeacherHomeworkCard from "../../../components/homeworkCard/TeacherHomeworkCard";
+import CreateHomeworkForm from "../../../components/forms/CreateHomeworkForm";
 
 function Home() {
   const homeworks = useSelector((state) => state.homeworks);
